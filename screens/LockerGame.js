@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   View,
   Text,
@@ -53,8 +54,16 @@ const LockerGame = () => {
   // Huidige score — reset naar 0 bij game over
   const [score, setScore] = useState(0);
 
-  // Hoogste score — wordt nooit gereset zolang de app open is
+  // Hoogste score — wordt opgeslagen en geladen via AsyncStorage
   const [highScore, setHighScore] = useState(0);
+
+  useEffect(function () {
+    AsyncStorage.getItem('highScore').then(function (value) {
+      if (value !== null) {
+        setHighScore(parseInt(value, 10));
+      }
+    });
+  }, []);
 
   // Huidige ronde — reset naar 1 bij game over
   const [round, setRound] = useState(1);
@@ -186,6 +195,7 @@ const LockerGame = () => {
       setScore(newScore);
       if (newScore > highScore) {
         setHighScore(newScore);
+        AsyncStorage.setItem('highScore', String(newScore));
       }
       setPhase('result');
       setPlayerInput(newInput);
@@ -417,7 +427,7 @@ const LockerGame = () => {
               ronde 5.
             </Text>
             <Text style={styles.modalText}>
-              Je high score blijft bewaard zolang de app open is.
+              Je high score blijft bewaard, ook als je de app afsluit.
             </Text>
 
             <TouchableOpacity
