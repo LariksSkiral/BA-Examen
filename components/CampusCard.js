@@ -1,14 +1,14 @@
-import React from 'react';
-import { View, Text, StyleSheet, Pressable, Image } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image, useWindowDimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useFonts, Poppins_400Regular, Poppins_500Medium, Poppins_700Bold } from '@expo-google-fonts/poppins';
+import { useFonts, Poppins_400Regular, Poppins_700Bold } from '@expo-google-fonts/poppins';
+import RenderHtml from 'react-native-render-html';
 
-const ProductCard = ({title, description, price, image, onPress}) => {
+const CampusCard = ({title, description, image, onPress}) => {
     const navigation = useNavigation();
+    const { width } = useWindowDimensions();
 
     const [fontsLoaded] = useFonts({
         Poppins_400Regular,
-        Poppins_500Medium,
         Poppins_700Bold,
     });
 
@@ -20,17 +20,22 @@ const ProductCard = ({title, description, price, image, onPress}) => {
                 <Image
                     source={{ uri: image.uri }}
                     style={styles.image}
-                    resizeMode="contain"
+                    resizeMode="cover"
                 />
             </View>
 
             <Text style={styles.title}>{title}</Text>
-            <Text style={styles.description} numberOfLines={4} ellipsizeMode="tail">{description}</Text>
+            <RenderHtml
+                source={{ html: description }}
+                contentWidth={width - 72}
+                tagsStyles={{
+                    p: styles.description,
+                }}
+            />
 
             <View style={styles.bottomRow}>
-                <Text style={styles.price}>€{parseFloat(price).toFixed(2)}</Text>
                 <View style={styles.button}>
-                    <Text style={styles.buttonText}>Bekijk</Text>
+                    <Text style={styles.buttonText}>Meer info</Text>
                 </View>
             </View>
         </Pressable>
@@ -69,27 +74,22 @@ const styles = StyleSheet.create({
         lineHeight: 22,
         fontFamily: 'Poppins_400Regular',
     },
-    price: {
-        fontSize: 18,
-        color: '#000',
-        fontFamily: 'Poppins_700Bold',
-    },
     bottomRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
     },
     imageContainer: {
-        alignItems: 'center',
         marginBottom: 20,
         height: 200,
-        justifyContent: 'center',
-        backgroundColor: '#F2F2F2',
+        overflow: 'hidden',
+        marginHorizontal: -20,
+        marginTop: -20,
     },
     image: {
-        width: 150,
-        height: 150,
+        width: '100%',
+        height: '100%',
     },
 });
 
-export default ProductCard;
+export default CampusCard;
