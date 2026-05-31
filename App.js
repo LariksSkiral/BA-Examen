@@ -8,6 +8,7 @@ import { useFonts, Poppins_400Regular, Poppins_500Medium, Poppins_700Bold } from
 import HomeScreen from './screens/HomeScreen';
 import ProductDetail from './screens/ProductDetail';
 import NewsDetail from './screens/NewsDetail';
+import LockerGame from './screens/LockerGame';
 
 const Stack = createNativeStackNavigator();
 
@@ -43,6 +44,7 @@ export default function App() {
         <Stack.Screen name="Busleyden Atheneum" component={HomeScreen} options={HeaderOptions}/>
         <Stack.Screen name="Details" component={ProductDetail} options={HeaderOptions} />
         <Stack.Screen name="NewsDetail" component={NewsDetail} options={{...HeaderOptions, title: 'Details'}}/>
+        <Stack.Screen name="LockerGame" component={LockerGame} options={{...HeaderOptions, title: 'Kluisje Kraken'}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

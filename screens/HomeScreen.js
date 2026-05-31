@@ -121,6 +121,12 @@ const HomeScreen = () => {
             Nieuws
           </Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.tabButton}
+          onPress={() => navigation.navigate('LockerGame')}
+        >
+          <Text style={styles.tabButtonText}>Minigame</Text>
+        </TouchableOpacity>
       </View>
 
       <ScrollView>
