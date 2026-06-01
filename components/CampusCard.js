@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useFonts, Poppins_400Regular, Poppins_700Bold } from '@expo-google-fonts/poppins';
 import RenderHtml from 'react-native-render-html';
 
-const CampusCard = ({title, description, image, onPress}) => {
+const CampusCard = ({title, description, image, color,onPress}) => {
     const navigation = useNavigation();
     const { width } = useWindowDimensions();
 
@@ -34,7 +34,8 @@ const CampusCard = ({title, description, image, onPress}) => {
             />
 
             <View style={styles.bottomRow}>
-                <View style={styles.button}>
+                <View style={[styles.button, color && { backgroundColor: color }]}> 
+                    {/* als er geen kleur is valt hij terug op standaard, && zorgt ervoor dat er geen foutmelding komt als er geen kleur is, geeft false terug waardoor de extra style niet wordt toegepast */}
                     <Text style={styles.buttonText}>Meer info</Text>
                 </View>
             </View>

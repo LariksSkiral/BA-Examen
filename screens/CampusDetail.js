@@ -4,7 +4,8 @@ import { useFonts, Poppins_400Regular, Poppins_500Medium, Poppins_700Bold } from
 import RenderHtml from 'react-native-render-html';
 
 const CampusDetail = ({ route }) => {
-    const { name, description, focus, image } = route.params;
+    const { name, description, focus, image, color } = route.params;
+    console.log('Received campus data:', { name, description, focus, image, color });
     const { width } = useWindowDimensions();
 
     const [fontsLoaded] = useFonts({
@@ -42,7 +43,7 @@ const CampusDetail = ({ route }) => {
 
                 <View style={styles.content}>
                     <Text style={styles.title}>{name}</Text>
-                    <View style={styles.focusBadge}>
+                    <View style={[styles.focusBadge, color && { backgroundColor: color }]}>
                         <Text style={styles.focusText}>{focus}</Text>
                     </View>
                     <View style={styles.divider} />

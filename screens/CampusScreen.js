@@ -42,6 +42,7 @@ const CampusScreen = () => {
             description: item.fieldData.inhoud,
             focus: focusNames[item.fieldData['focus-nieuw']] || "Unknown focus",
             image: { uri: item.fieldData.foto.url },
+            color: item.fieldData.accentkleur || "#86BC25",
           })));
         })
         .catch(error => {
@@ -63,11 +64,13 @@ const CampusScreen = () => {
                         title={c.name}
                         description={c.description}
                         image={c.image}
+                        color={c.color}
                         onPress={() => navigation.navigate('CampusDetail', {
                             name: c.name,
                             description: c.description,
                             focus: c.focus,
                             image: c.image,
+                            color: c.color,
                         })}
                     />
                 ))}

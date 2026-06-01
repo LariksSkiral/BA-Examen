@@ -13,6 +13,7 @@ const Tab = createBottomTabNavigator();
 
 const screenOptions = ({ route }) => ({
   headerShown: false,
+  tabBarActiveTintColor: '#86BC25',
   tabBarIcon: ({ focused, color, size }) => {
     let iconName;
 
