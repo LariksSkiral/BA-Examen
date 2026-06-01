@@ -15,22 +15,17 @@ const ARROWS = ['↑', '↓', '←', '→'];
 
 // Geeft terug hoeveel pijlen de reeks heeft voor een bepaalde ronde
 function getSequenceLength(round) {
-  if (round <= 4) {
-    return round + 2; // ronde 1 = 3, ronde 2 = 4, ronde 3 = 5, ronde 4 = 6
-  }
-  return 7; // vanaf ronde 5 altijd 7
+  if (round <= 2) return 2;        // ronde 1-2 = 2 pijlen
+  if (round <= 5) return 3;        // ronde 3-5 = 3 pijlen
+  if (round <= 9) return 4;        // ronde 6-9 = 4 pijlen
+  return 5;                        // ronde 10+ = 5 pijlen
 }
 
 // Geeft terug hoeveel seconden de speler heeft om in te voeren
 function getTimerMax(round) {
-  if (round <= 4) {
-    return round + 8; // ronde 1 = 9s, ronde 2 = 10s, ronde 3 = 11s, ronde 4 = 12s
-  }
-  // Vanaf ronde 5 wordt de timer korter, met een minimum van 3 seconden
-  var timer = 12 - (round - 4);
-  if (timer < 3) {
-    return 3;
-  }
+  // Start op 15s, daalt 1s per ronde, minimum 6s
+  var timer = 15 - (round - 1);
+  if (timer < 6) return 6;
   return timer;
 }
 
@@ -142,7 +137,7 @@ const LockerGame = () => {
     setTimeout(function () {
       setPhase('input');
       startTimer(max);
-    }, 2000);
+    }, 3000);
   }
 
   // Reset het spel volledig naar de begintoestand
@@ -410,7 +405,7 @@ const LockerGame = () => {
               Een reeks pijlen verschijnt kort op het scherm. Onthoud ze goed!
             </Text>
             <Text style={styles.modalText}>
-              Na 2 seconden verdwijnen de pijlen. Voer daarna dezelfde reeks in
+              Na 3 seconden verdwijnen de pijlen. Voer daarna dezelfde reeks in
               door op de pijlknoppen te drukken.
             </Text>
             <Text style={styles.modalText}>
@@ -423,8 +418,8 @@ const LockerGame = () => {
             </Text>
             <Text style={styles.modalText}>
               Elke correcte ronde geeft je ronde × 10 punten. De reeks wordt
-              langer per ronde (max. 7 pijlen) en de timer wordt korter vanaf
-              ronde 5.
+              langer per ronde (max. 5 pijlen vanaf ronde 10) en de timer wordt korter naarmate
+              je verder komt (minimum 6 seconden).
             </Text>
             <Text style={styles.modalText}>
               Je high score blijft bewaard, ook als je de app afsluit.
